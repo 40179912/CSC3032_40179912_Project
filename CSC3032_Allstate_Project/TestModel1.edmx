@@ -1,0 +1,383 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Database1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Accounts">
+          <Key>
+            <PropertyRef Name="AccountID" />
+          </Key>
+          <Property Name="AccountID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Account Description" Type="varchar(max)" />
+          <Property Name="EmployeeID" Type="int" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+          </Key>
+          <Property Name="EmployeeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Forename" Type="varchar" MaxLength="20" />
+          <Property Name="Surname" Type="varchar" MaxLength="20" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+          <Property Name="JobID" Type="int" />
+          <Property Name="Works Under" Type="int" />
+          <Property Name="Anomoly" Type="bit" />
+        </EntityType>
+        <EntityType Name="Employee Benefits">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+            <PropertyRef Name="EntitlementID" />
+          </Key>
+          <Property Name="EmployeeID" Type="int" Nullable="false" />
+          <Property Name="EntitlementID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Entitlements">
+          <Key>
+            <PropertyRef Name="EntitlementID" />
+          </Key>
+          <Property Name="EntitlementID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="Job Benefits">
+          <Key>
+            <PropertyRef Name="JobID" />
+            <PropertyRef Name="EntitlementID" />
+          </Key>
+          <Property Name="JobID" Type="int" Nullable="false" />
+          <Property Name="EntitlementID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Jobs">
+          <Key>
+            <PropertyRef Name="JobID" />
+          </Key>
+          <Property Name="JobID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Job Name" Type="varchar(max)" />
+          <Property Name="Job Description" Type="varchar(max)" />
+        </EntityType>
+        <Association Name="FK__Accounts__Employ__3B75D760">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="Accounts" Type="Self.Accounts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="Accounts">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Employee __Emplo__48CFD27E">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Employee Benefits" Type="Self.Employee Benefits" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="Employee Benefits">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Employee __Entit__47DBAE45">
+          <End Role="Entitlements" Type="Self.Entitlements" Multiplicity="1" />
+          <End Role="Employee Benefits" Type="Self.Employee Benefits" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Entitlements">
+              <PropertyRef Name="EntitlementID" />
+            </Principal>
+            <Dependent Role="Employee Benefits">
+              <PropertyRef Name="EntitlementID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Employee__JobID__3C69FB99">
+          <End Role="Jobs" Type="Self.Jobs" Multiplicity="0..1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Jobs">
+              <PropertyRef Name="JobID" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="JobID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Employee__Works __3E52440B">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="Employee1" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="Employee1">
+              <PropertyRef Name="Works Under" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Job Benef__Entit__4BAC3F29">
+          <End Role="Entitlements" Type="Self.Entitlements" Multiplicity="1" />
+          <End Role="Job Benefits" Type="Self.Job Benefits" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Entitlements">
+              <PropertyRef Name="EntitlementID" />
+            </Principal>
+            <Dependent Role="Job Benefits">
+              <PropertyRef Name="EntitlementID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Job Benef__JobID__4CA06362">
+          <End Role="Jobs" Type="Self.Jobs" Multiplicity="1" />
+          <End Role="Job Benefits" Type="Self.Job Benefits" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Jobs">
+              <PropertyRef Name="JobID" />
+            </Principal>
+            <Dependent Role="Job Benefits">
+              <PropertyRef Name="JobID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Database1ModelStoreContainer">
+          <EntitySet Name="Accounts" EntityType="Self.Accounts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employee Benefits" EntityType="Self.Employee Benefits" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Entitlements" EntityType="Self.Entitlements" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Job Benefits" EntityType="Self.Job Benefits" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Jobs" EntityType="Self.Jobs" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Accounts__Employ__3B75D760" Association="Self.FK__Accounts__Employ__3B75D760">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Accounts" EntitySet="Accounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Employee __Emplo__48CFD27E" Association="Self.FK__Employee __Emplo__48CFD27E">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Employee Benefits" EntitySet="Employee Benefits" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Employee __Entit__47DBAE45" Association="Self.FK__Employee __Entit__47DBAE45">
+            <End Role="Entitlements" EntitySet="Entitlements" />
+            <End Role="Employee Benefits" EntitySet="Employee Benefits" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Employee__JobID__3C69FB99" Association="Self.FK__Employee__JobID__3C69FB99">
+            <End Role="Jobs" EntitySet="Jobs" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Employee__Works __3E52440B" Association="Self.FK__Employee__Works __3E52440B">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Employee1" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Job Benef__Entit__4BAC3F29" Association="Self.FK__Job Benef__Entit__4BAC3F29">
+            <End Role="Entitlements" EntitySet="Entitlements" />
+            <End Role="Job Benefits" EntitySet="Job Benefits" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Job Benef__JobID__4CA06362" Association="Self.FK__Job Benef__JobID__4CA06362">
+            <End Role="Jobs" EntitySet="Jobs" />
+            <End Role="Job Benefits" EntitySet="Job Benefits" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Database1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="AccountID" />
+          </Key>
+          <Property Name="AccountID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Account_Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="EmployeeID" Type="Int32" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK__Accounts__Employ__3B75D760" FromRole="Accounts" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+          </Key>
+          <Property Name="EmployeeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Forename" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Surname" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="JobID" Type="Int32" />
+          <Property Name="Works_Under" Type="Int32" />
+          <Property Name="Anomoly" Type="Boolean" />
+          <NavigationProperty Name="Accounts" Relationship="Self.FK__Accounts__Employ__3B75D760" FromRole="Employee" ToRole="Accounts" />
+          <NavigationProperty Name="Job" Relationship="Self.FK__Employee__JobID__3C69FB99" FromRole="Employee" ToRole="Jobs" />
+          <NavigationProperty Name="Employee1" Relationship="Self.FK__Employee__Works___3E52440B" FromRole="Employee" ToRole="Employee1" />
+          <NavigationProperty Name="Employee2" Relationship="Self.FK__Employee__Works___3E52440B" FromRole="Employee1" ToRole="Employee" />
+          <NavigationProperty Name="Entitlements" Relationship="Self.Employee_Benefits" FromRole="Employee" ToRole="Entitlements" />
+        </EntityType>
+        <EntityType Name="Entitlement">
+          <Key>
+            <PropertyRef Name="EntitlementID" />
+          </Key>
+          <Property Name="EntitlementID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Employees" Relationship="Self.Employee_Benefits" FromRole="Entitlements" ToRole="Employee" />
+          <NavigationProperty Name="Jobs" Relationship="Self.Job_Benefits" FromRole="Entitlements" ToRole="Jobs" />
+        </EntityType>
+        <EntityType Name="Job">
+          <Key>
+            <PropertyRef Name="JobID" />
+          </Key>
+          <Property Name="JobID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Job_Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Job_Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Employees" Relationship="Self.FK__Employee__JobID__3C69FB99" FromRole="Jobs" ToRole="Employee" />
+          <NavigationProperty Name="Entitlements" Relationship="Self.Job_Benefits" FromRole="Jobs" ToRole="Entitlements" />
+        </EntityType>
+        <Association Name="FK__Accounts__Employ__3B75D760">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="Accounts" Type="Self.Account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="Accounts">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Employee__JobID__3C69FB99">
+          <End Role="Jobs" Type="Self.Job" Multiplicity="0..1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Jobs">
+              <PropertyRef Name="JobID" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="JobID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Employee__Works___3E52440B">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="Employee1" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="Employee1">
+              <PropertyRef Name="Works_Under" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Employee_Benefits">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <End Role="Entitlements" Type="Self.Entitlement" Multiplicity="*" />
+        </Association>
+        <Association Name="Job_Benefits">
+          <End Role="Entitlements" Type="Self.Entitlement" Multiplicity="*" />
+          <End Role="Jobs" Type="Self.Job" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="Database1Entities2" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Accounts" EntityType="Self.Account" />
+          <EntitySet Name="Employees" EntityType="Self.Employee" />
+          <EntitySet Name="Entitlements" EntityType="Self.Entitlement" />
+          <EntitySet Name="Jobs" EntityType="Self.Job" />
+          <AssociationSet Name="FK__Accounts__Employ__3B75D760" Association="Self.FK__Accounts__Employ__3B75D760">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Accounts" EntitySet="Accounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Employee__JobID__3C69FB99" Association="Self.FK__Employee__JobID__3C69FB99">
+            <End Role="Jobs" EntitySet="Jobs" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Employee__Works___3E52440B" Association="Self.FK__Employee__Works___3E52440B">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Employee1" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="Employee_Benefits" Association="Self.Employee_Benefits">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Entitlements" EntitySet="Entitlements" />
+          </AssociationSet>
+          <AssociationSet Name="Job_Benefits" Association="Self.Job_Benefits">
+            <End Role="Entitlements" EntitySet="Entitlements" />
+            <End Role="Jobs" EntitySet="Jobs" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Database1ModelStoreContainer" CdmEntityContainer="Database1Entities2">
+          <EntitySetMapping Name="Accounts">
+            <EntityTypeMapping TypeName="Database1Model.Account">
+              <MappingFragment StoreEntitySet="Accounts">
+                <ScalarProperty Name="AccountID" ColumnName="AccountID" />
+                <ScalarProperty Name="Account_Description" ColumnName="Account Description" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="Database1Model.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="Forename" ColumnName="Forename" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="JobID" ColumnName="JobID" />
+                <ScalarProperty Name="Works_Under" ColumnName="Works Under" />
+                <ScalarProperty Name="Anomoly" ColumnName="Anomoly" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Entitlements">
+            <EntityTypeMapping TypeName="Database1Model.Entitlement">
+              <MappingFragment StoreEntitySet="Entitlements">
+                <ScalarProperty Name="EntitlementID" ColumnName="EntitlementID" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Jobs">
+            <EntityTypeMapping TypeName="Database1Model.Job">
+              <MappingFragment StoreEntitySet="Jobs">
+                <ScalarProperty Name="JobID" ColumnName="JobID" />
+                <ScalarProperty Name="Job_Name" ColumnName="Job Name" />
+                <ScalarProperty Name="Job_Description" ColumnName="Job Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="Employee_Benefits" TypeName="Database1Model.Employee_Benefits" StoreEntitySet="Employee Benefits">
+            <EndProperty Name="Employee">
+              <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+            </EndProperty>
+            <EndProperty Name="Entitlements">
+              <ScalarProperty Name="EntitlementID" ColumnName="EntitlementID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="Job_Benefits" TypeName="Database1Model.Job_Benefits" StoreEntitySet="Job Benefits">
+            <EndProperty Name="Entitlements">
+              <ScalarProperty Name="EntitlementID" ColumnName="EntitlementID" />
+            </EndProperty>
+            <EndProperty Name="Jobs">
+              <ScalarProperty Name="JobID" ColumnName="JobID" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
