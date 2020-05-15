@@ -50,12 +50,20 @@
             this.SectorBox = new System.Windows.Forms.ComboBox();
             this.JobBox = new System.Windows.Forms.ComboBox();
             this.DeleteJobBtn = new System.Windows.Forms.Button();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.panel4 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.panel1.SuspendLayout();
+            this.panel2.SuspendLayout();
+            this.panel3.SuspendLayout();
+            this.panel4.SuspendLayout();
             this.SuspendLayout();
             // 
             // SectorTextBox
             // 
-            this.SectorTextBox.Location = new System.Drawing.Point(123, 279);
+            this.SectorTextBox.Location = new System.Drawing.Point(115, 111);
             this.SectorTextBox.Multiline = true;
             this.SectorTextBox.Name = "SectorTextBox";
             this.SectorTextBox.Size = new System.Drawing.Size(252, 20);
@@ -64,7 +72,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(26, 284);
+            this.label3.Location = new System.Drawing.Point(41, 115);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(49, 17);
             this.label3.TabIndex = 13;
@@ -73,7 +81,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(11, 328);
+            this.label2.Location = new System.Drawing.Point(3, 160);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(106, 17);
             this.label2.TabIndex = 12;
@@ -82,7 +90,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(26, 253);
+            this.label1.Location = new System.Drawing.Point(41, 84);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(72, 17);
             this.label1.TabIndex = 11;
@@ -90,7 +98,7 @@
             // 
             // JobDescTextBox
             // 
-            this.JobDescTextBox.Location = new System.Drawing.Point(123, 328);
+            this.JobDescTextBox.Location = new System.Drawing.Point(115, 160);
             this.JobDescTextBox.Multiline = true;
             this.JobDescTextBox.Name = "JobDescTextBox";
             this.JobDescTextBox.Size = new System.Drawing.Size(252, 121);
@@ -98,7 +106,7 @@
             // 
             // JobNameBox
             // 
-            this.JobNameBox.Location = new System.Drawing.Point(123, 253);
+            this.JobNameBox.Location = new System.Drawing.Point(115, 85);
             this.JobNameBox.Multiline = true;
             this.JobNameBox.Name = "JobNameBox";
             this.JobNameBox.Size = new System.Drawing.Size(252, 20);
@@ -106,7 +114,7 @@
             // 
             // AddJobBut
             // 
-            this.AddJobBut.Location = new System.Drawing.Point(188, 456);
+            this.AddJobBut.Location = new System.Drawing.Point(180, 288);
             this.AddJobBut.Name = "AddJobBut";
             this.AddJobBut.Size = new System.Drawing.Size(103, 23);
             this.AddJobBut.TabIndex = 49;
@@ -117,7 +125,7 @@
             // JobDescBox
             // 
             this.JobDescBox.BackColor = System.Drawing.Color.White;
-            this.JobDescBox.Location = new System.Drawing.Point(489, 307);
+            this.JobDescBox.Location = new System.Drawing.Point(67, 139);
             this.JobDescBox.Multiline = true;
             this.JobDescBox.Name = "JobDescBox";
             this.JobDescBox.ReadOnly = true;
@@ -126,7 +134,8 @@
             // 
             // EditJobBeneBtn
             // 
-            this.EditJobBeneBtn.Location = new System.Drawing.Point(261, 106);
+            this.EditJobBeneBtn.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.EditJobBeneBtn.Location = new System.Drawing.Point(271, 13);
             this.EditJobBeneBtn.Name = "EditJobBeneBtn";
             this.EditJobBeneBtn.Size = new System.Drawing.Size(137, 39);
             this.EditJobBeneBtn.TabIndex = 58;
@@ -136,7 +145,8 @@
             // 
             // EnterBeneBtn
             // 
-            this.EnterBeneBtn.Location = new System.Drawing.Point(627, 106);
+            this.EnterBeneBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.EnterBeneBtn.Location = new System.Drawing.Point(637, 13);
             this.EnterBeneBtn.Name = "EnterBeneBtn";
             this.EnterBeneBtn.Size = new System.Drawing.Size(111, 39);
             this.EnterBeneBtn.TabIndex = 57;
@@ -146,7 +156,7 @@
             // 
             // EditEmployBeneBtn
             // 
-            this.EditEmployBeneBtn.Location = new System.Drawing.Point(34, 106);
+            this.EditEmployBeneBtn.Location = new System.Drawing.Point(44, 13);
             this.EditEmployBeneBtn.Name = "EditEmployBeneBtn";
             this.EditEmployBeneBtn.Size = new System.Drawing.Size(180, 39);
             this.EditEmployBeneBtn.TabIndex = 56;
@@ -156,7 +166,8 @@
             // 
             // EnterEmpBtn
             // 
-            this.EnterEmpBtn.Location = new System.Drawing.Point(444, 106);
+            this.EnterEmpBtn.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.EnterEmpBtn.Location = new System.Drawing.Point(454, 13);
             this.EnterEmpBtn.Name = "EnterEmpBtn";
             this.EnterEmpBtn.Size = new System.Drawing.Size(132, 39);
             this.EnterEmpBtn.TabIndex = 55;
@@ -166,6 +177,8 @@
             // 
             // pictureBox1
             // 
+            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox1.BackColor = System.Drawing.SystemColors.Desktop;
             this.pictureBox1.ImageLocation = "https://logo-logos.com/wp-content/uploads/2016/10/Allstate_logo.png";
             this.pictureBox1.Location = new System.Drawing.Point(-2, 0);
@@ -178,7 +191,7 @@
             // ShowSectorBox
             // 
             this.ShowSectorBox.BackColor = System.Drawing.Color.White;
-            this.ShowSectorBox.Location = new System.Drawing.Point(489, 280);
+            this.ShowSectorBox.Location = new System.Drawing.Point(67, 112);
             this.ShowSectorBox.Multiline = true;
             this.ShowSectorBox.Name = "ShowSectorBox";
             this.ShowSectorBox.ReadOnly = true;
@@ -188,7 +201,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(11, 185);
+            this.label4.Location = new System.Drawing.Point(3, 17);
             this.label4.MaximumSize = new System.Drawing.Size(405, 85);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(403, 51);
@@ -200,7 +213,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(427, 168);
+            this.label5.Location = new System.Drawing.Point(5, 0);
             this.label5.MaximumSize = new System.Drawing.Size(400, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(400, 68);
@@ -209,7 +222,7 @@
             // 
             // ClearDatabaseBtn
             // 
-            this.ClearDatabaseBtn.Location = new System.Drawing.Point(703, 501);
+            this.ClearDatabaseBtn.Location = new System.Drawing.Point(705, 18);
             this.ClearDatabaseBtn.Name = "ClearDatabaseBtn";
             this.ClearDatabaseBtn.Size = new System.Drawing.Size(124, 25);
             this.ClearDatabaseBtn.TabIndex = 83;
@@ -219,7 +232,7 @@
             // 
             // ClearJobsBtn
             // 
-            this.ClearJobsBtn.Location = new System.Drawing.Point(-2, 501);
+            this.ClearJobsBtn.Location = new System.Drawing.Point(3, 18);
             this.ClearJobsBtn.Name = "ClearJobsBtn";
             this.ClearJobsBtn.Size = new System.Drawing.Size(124, 25);
             this.ClearJobsBtn.TabIndex = 84;
@@ -233,7 +246,7 @@
             this.SectorBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.SectorBox.FormattingEnabled = true;
             this.SectorBox.IntegralHeight = false;
-            this.SectorBox.Location = new System.Drawing.Point(123, 298);
+            this.SectorBox.Location = new System.Drawing.Point(115, 130);
             this.SectorBox.Name = "SectorBox";
             this.SectorBox.Size = new System.Drawing.Size(252, 24);
             this.SectorBox.TabIndex = 87;
@@ -244,7 +257,7 @@
             this.JobBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.JobBox.FormattingEnabled = true;
             this.JobBox.IntegralHeight = false;
-            this.JobBox.Location = new System.Drawing.Point(489, 257);
+            this.JobBox.Location = new System.Drawing.Point(67, 89);
             this.JobBox.Name = "JobBox";
             this.JobBox.Size = new System.Drawing.Size(221, 24);
             this.JobBox.TabIndex = 88;
@@ -252,7 +265,7 @@
             // 
             // DeleteJobBtn
             // 
-            this.DeleteJobBtn.Location = new System.Drawing.Point(565, 456);
+            this.DeleteJobBtn.Location = new System.Drawing.Point(143, 288);
             this.DeleteJobBtn.Name = "DeleteJobBtn";
             this.DeleteJobBtn.Size = new System.Drawing.Size(75, 23);
             this.DeleteJobBtn.TabIndex = 92;
@@ -260,37 +273,86 @@
             this.DeleteJobBtn.UseVisualStyleBackColor = true;
             this.DeleteJobBtn.Click += new System.EventHandler(this.DeleteJobBtn_Click);
             // 
+            // panel1
+            // 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.BackColor = System.Drawing.Color.MediumBlue;
+            this.panel1.Controls.Add(this.label5);
+            this.panel1.Controls.Add(this.JobDescBox);
+            this.panel1.Controls.Add(this.ShowSectorBox);
+            this.panel1.Controls.Add(this.JobBox);
+            this.panel1.Controls.Add(this.DeleteJobBtn);
+            this.panel1.Location = new System.Drawing.Point(420, 168);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(412, 312);
+            this.panel1.TabIndex = 93;
+            // 
+            // panel2
+            // 
+            this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel2.BackColor = System.Drawing.SystemColors.Desktop;
+            this.panel2.Controls.Add(this.EnterBeneBtn);
+            this.panel2.Controls.Add(this.EnterEmpBtn);
+            this.panel2.Controls.Add(this.EditEmployBeneBtn);
+            this.panel2.Controls.Add(this.EditJobBeneBtn);
+            this.panel2.Location = new System.Drawing.Point(1, 98);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(826, 70);
+            this.panel2.TabIndex = 0;
+            // 
+            // panel3
+            // 
+            this.panel3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.panel3.BackColor = System.Drawing.Color.Salmon;
+            this.panel3.Controls.Add(this.JobDescTextBox);
+            this.panel3.Controls.Add(this.JobNameBox);
+            this.panel3.Controls.Add(this.label1);
+            this.panel3.Controls.Add(this.label2);
+            this.panel3.Controls.Add(this.label3);
+            this.panel3.Controls.Add(this.SectorBox);
+            this.panel3.Controls.Add(this.SectorTextBox);
+            this.panel3.Controls.Add(this.AddJobBut);
+            this.panel3.Controls.Add(this.label4);
+            this.panel3.Location = new System.Drawing.Point(1, 168);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(427, 312);
+            this.panel3.TabIndex = 0;
+            // 
+            // panel4
+            // 
+            this.panel4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel4.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.panel4.Controls.Add(this.ClearJobsBtn);
+            this.panel4.Controls.Add(this.ClearDatabaseBtn);
+            this.panel4.Location = new System.Drawing.Point(-2, 480);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(829, 48);
+            this.panel4.TabIndex = 0;
+            // 
             // EnterJob
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(827, 525);
-            this.Controls.Add(this.DeleteJobBtn);
-            this.Controls.Add(this.JobBox);
-            this.Controls.Add(this.SectorBox);
-            this.Controls.Add(this.ClearJobsBtn);
-            this.Controls.Add(this.ClearDatabaseBtn);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.ShowSectorBox);
-            this.Controls.Add(this.EditJobBeneBtn);
-            this.Controls.Add(this.EnterBeneBtn);
-            this.Controls.Add(this.EditEmployBeneBtn);
-            this.Controls.Add(this.EnterEmpBtn);
+            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.panel2);
+            this.Controls.Add(this.panel3);
+            this.Controls.Add(this.panel4);
             this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.JobDescBox);
-            this.Controls.Add(this.AddJobBut);
-            this.Controls.Add(this.SectorTextBox);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.JobDescTextBox);
-            this.Controls.Add(this.JobNameBox);
             this.Name = "EnterJob";
             this.Text = "EnterJob";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel3.ResumeLayout(false);
+            this.panel3.PerformLayout();
+            this.panel4.ResumeLayout(false);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -316,5 +378,9 @@
         private System.Windows.Forms.ComboBox SectorBox;
         private System.Windows.Forms.ComboBox JobBox;
         private System.Windows.Forms.Button DeleteJobBtn;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Panel panel4;
     }
 }

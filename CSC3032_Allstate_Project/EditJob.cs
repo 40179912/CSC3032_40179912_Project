@@ -27,27 +27,31 @@ namespace CSC3032_Allstate_Project
 
         }
 
+ //------------------------------------------------------------------------------------------------------------------------------------The Button Click Events needed to navigate the various forms---------------------
+//----------------------------------------------------------------------------------------------------------
+
+        //closes the current page and then opens the Enter Employee page when the button is pressed
         private void EnterEmpBtn_Click(object sender, EventArgs e)
         {
             this.Hide();
             EnterEmp Ee = new EnterEmp();
             Ee.Show();
         }
-
+        //closes the current page and then opens the Enter Entitlement page when the button is pressed
         private void EnterBeneBtn_Click(object sender, EventArgs e)
         {
             this.Hide();
             EnterEntitlement Ee = new EnterEntitlement();
             Ee.Show();
         }
-
+        //closes the current page and then opens the Edit Employee page when the button is pressed
         private void EditEmployBeneBtn_Click(object sender, EventArgs e)
         {
             this.Hide();
             EditEmploy Ee = new EditEmploy();
             Ee.Show();
         }
-
+        //closes the current page and then opens the Edit Job page when the button is pressed
         private void EnterJobBtn_Click(object sender, EventArgs e)
         {
             this.Hide();
@@ -55,9 +59,10 @@ namespace CSC3032_Allstate_Project
             Ej.Show();
         }
 
+        //Takes all job names from the database and puts them into a drop down box
         private void showJobs()
         {
-            String query = "select [Job Name] from Jobs except (select [Job Name] from Jobs where [Job Name] is null and [Job Description] is null and Sector is null)";
+            String query = "select * from Jobs except select * from Jobs where [Job Name] is null and [Job Description] is null and Sector is null order by JobID";
 
             using (connection = new SqlConnection(connectionString))
             using (SqlCommand command = new SqlCommand(query, connection))
@@ -73,7 +78,7 @@ namespace CSC3032_Allstate_Project
             }
 
         }
-
+        //Shows the sector of the job in the drop down box in a textbox
         private void showSector()
         {
             String query = "select [Sector] from Jobs where [Job Name] = @JobName";
@@ -98,7 +103,7 @@ namespace CSC3032_Allstate_Project
             }
 
         }
-
+        //shows the description of the job in the drop down box in a text box
         private void showDescription()
         {
             String query = "select [Job Description] from Jobs where [Job Name] = @JobName";
@@ -123,7 +128,7 @@ namespace CSC3032_Allstate_Project
             }
 
         }
-
+        //shows the entitlements of the job in the drop down box in a list box
         private void showJobBenefits()
         {
             String query = "select [EntitlementID] from [Job Benefits] where JobID = (Select JobID from Jobs where [Job Name] = @JobName)";
@@ -144,7 +149,7 @@ namespace CSC3032_Allstate_Project
             }
 
         }
-
+        //shows the description of the entitlement in the list box in a text box
         private void showJobBenefitDescription()
         {
             String query = "select [Description] from [Entitlements] where EntitlementID = @EntitlementID";
@@ -163,7 +168,7 @@ namespace CSC3032_Allstate_Project
                 }
             }
         }
-
+        //Takes all entitlements from the database and puts them into a drop down box
         private void showBenefits()
         {
             String query = "select [EntitlementID] from Entitlements except (Select EntitlementID from Entitlements where Description is null)";
@@ -202,64 +207,96 @@ namespace CSC3032_Allstate_Project
                 }
             }
         }
-
+        //changes the text in the text box when the value in the drop down box changes
         private void RemvBeneList_SelectedIndexChanged(object sender, EventArgs e)
         {
             showJobBenefitDescription();
         }
 
+        //Gives the chosen entitlement to the chosen Job
         private void InsrtBeneBtn_Click(object sender, EventArgs e)
         {
-            String query = "Insert into [Job Benefits] Values ((Select JobID from Jobs where [Job Name] = @JobName), @EntitlementID)";
-
-            using (connection = new SqlConnection(connectionString))
-            using (SqlCommand command = new SqlCommand(query, connection))
-            using (SqlDataAdapter adapter = new SqlDataAdapter(command))
+            if (JobBox.Items.Count > 0)
             {
-                connection.Open();
-                command.Parameters.AddWithValue("@JobName", JobBox.Text);
-                command.Parameters.AddWithValue("@EntitlementID", InsrtBeneBox.Text);
-                try
+                if (InsrtBeneBox.Items.Count > 0)
                 {
-                    command.ExecuteNonQuery();
+                    String query = "Insert into [Job Benefits] Values ((Select JobID from Jobs where [Job Name] = @JobName), @EntitlementID)";
+
+                    using (connection = new SqlConnection(connectionString))
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    using (SqlDataAdapter adapter = new SqlDataAdapter(command))
+                    {
+                        connection.Open();
+                        command.Parameters.AddWithValue("@JobName", JobBox.Text);
+                        command.Parameters.AddWithValue("@EntitlementID", InsrtBeneBox.Text);
+                        try
+                        {
+                            command.ExecuteNonQuery();
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message);
+                        }
+
+                    }
+                    showJobBenefits();
                 }
-                catch (Exception ex)
+                else
                 {
-                    MessageBox.Show(ex.Message);
+                    MessageBox.Show("No Benefits to add");
                 }
-               
             }
-            showJobBenefits();
+            else
+            {
+                MessageBox.Show("No Jobs to insert benefits into.");
+            }
+
         }
 
+        //Removes the chosen entitlement from the chosen Job
         private void RemvBeneBtn_Click(object sender, EventArgs e)
         {
-            String query = "Delete from [Job Benefits] where JobID = (Select [JobID] from Jobs where [Job Name] = @JobName) and EntitlementID = @EntitlementID";
-
-            using (connection = new SqlConnection(connectionString))
-            using (SqlCommand command = new SqlCommand(query, connection))
-            using (SqlDataAdapter adapter = new SqlDataAdapter(command))
+            if (JobBox.Items.Count > 0)
             {
-                connection.Open();
-                command.Parameters.AddWithValue("@JobName", JobBox.Text);
-                command.Parameters.AddWithValue("@EntitlementID", RemvBeneList.Text);
-
-                try
+                if (RemvBeneList.Items.Count > 0)
                 {
-                    command.ExecuteNonQuery();
+                    String query = "Delete from [Job Benefits] where JobID = (Select [JobID] from Jobs where [Job Name] = @JobName) and EntitlementID = @EntitlementID";
+
+                    using (connection = new SqlConnection(connectionString))
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    using (SqlDataAdapter adapter = new SqlDataAdapter(command))
+                    {
+                        connection.Open();
+                        command.Parameters.AddWithValue("@JobName", JobBox.Text);
+                        command.Parameters.AddWithValue("@EntitlementID", RemvBeneList.Text);
+
+                        try
+                        {
+                            command.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+
+                        }
+                    }
+                    showJobBenefits();
+                    if (RemvBeneList.Items.Count == 0)
+                    {
+                        RemvBeneBox.Clear();
+                    }
                 }
-                catch
+                else
                 {
-
+                    MessageBox.Show("No Benefits to remove");
                 }
             }
-            showJobBenefits();
-            if (RemvBeneList.Items.Count == 0)
+            else
             {
-                RemvBeneBox.Clear();
+                MessageBox.Show("No Job to remove benefits from.");
+
             }
         }
-
+        //deletes everything in the database
         private void ClearDatabaseBtn_Click(object sender, EventArgs e)
         {
 
@@ -299,7 +336,7 @@ namespace CSC3032_Allstate_Project
             }
         
     }
-
+        //Deletes everything in the job benefits table
         private void ClearJobBeneBtn_Click(object sender, EventArgs e)
         {
             DialogResult Dr = MessageBox.Show("You pressed the button to completely clear all your jobs of their current benefits. Are you sure you want to do this?", "Clear Job Benefits", MessageBoxButtons.YesNo);
@@ -329,6 +366,7 @@ namespace CSC3032_Allstate_Project
             }
         }
 
+        //changes the contents in the textboxes and listboxes when the value in the drop down box changes
         private void JobBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             showSector();
@@ -340,6 +378,7 @@ namespace CSC3032_Allstate_Project
             }
         }
 
+        //changes the text in the text box when the value in the drop down box changes
         private void InsrtBeneBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             showBenefitDescription();

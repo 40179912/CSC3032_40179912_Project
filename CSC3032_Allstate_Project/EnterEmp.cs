@@ -26,27 +26,31 @@ namespace CSC3032_Allstate_Project
             pictureBox1.Image = Properties.Resources.Allstate_logo;
         }
 
+//------------------------------------------------------------------------------------------------------------------------------------The Button Click Events needed to navigate the various forms----------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------------
+
+        //closes the current page and then opens the Edit Employee page when the button is pressed
         private void EditEmployBeneBtn_Click(object sender, EventArgs e)
         {
             this.Hide();
             EditEmploy Ee = new EditEmploy();
             Ee.Show();
         }
-
+        //closes the current page and then opens the Edit Job page when the button is pressed
         private void EditJobBeneBtn_Click(object sender, EventArgs e)
         {
             this.Hide();
             EditJob Ee = new EditJob();
             Ee.Show();
         }
-
+        //closes the current page and then opens the Enter Entitlement page when the button is pressed
         private void EnterBeneBtn_Click(object sender, EventArgs e)
         {
             this.Hide();
             EnterEntitlement Ee = new EnterEntitlement();
             Ee.Show();
         }
-
+        //closes the current page and then opens the Enter Employee page when the button is pressed
         private void EnterEmpBtn_Click(object sender, EventArgs e)
         {
             this.Hide();
@@ -54,10 +58,11 @@ namespace CSC3032_Allstate_Project
             Ee.Show();
         }
 
+        //puts the names of all jobs in the database into a drop down menu
         private void showchngJobName()
         {
             using (connection = new SqlConnection(connectionString))
-            using (SqlDataAdapter adapter = new SqlDataAdapter("SELECT * FROM Jobs", connection))
+            using (SqlDataAdapter adapter = new SqlDataAdapter("select * from Jobs except select * from Jobs where [Job Name] is null and [Job Description] is null and Sector is null order by JobID", connection))
             {
                 DataTable JIDtable = new DataTable();
                 adapter.Fill(JIDtable);
@@ -67,7 +72,7 @@ namespace CSC3032_Allstate_Project
                 JobBox.DataSource = JIDtable;
             }
         }
-
+        //changes the text of an invisible text box to the ID number of the job in the drop down menu
         private void showchngJobID()
         {
             String query = "SELECT [JobID] FROM Jobs where [Job Name] = @JobName";
@@ -90,7 +95,7 @@ namespace CSC3032_Allstate_Project
                 }
             }
         }
-
+        //puts the ID numbers of all employees in the database into a drop down menu
         private void showWID()
         {
             using (connection = new SqlConnection(connectionString))
@@ -104,7 +109,7 @@ namespace CSC3032_Allstate_Project
                 WUIDBox.DataSource = IDtable;
             }
         }
-
+        //shows the forename of the employee who's ID is in the WUIDBox
         private void showWUForeNames()
         {
             String query = "select Forename from Employee" +
@@ -129,7 +134,7 @@ namespace CSC3032_Allstate_Project
                 }
             }
         }
-
+        //shows the surname of the employee who's ID is in the WUIDBox
         private void showWUSurNames()
         {
             String query = "select Surname from Employee" +
@@ -155,28 +160,28 @@ namespace CSC3032_Allstate_Project
             }
 
         }
-
+        //enters in the details of the textboxes as a new employee or replacing a deleted employee
         private void button1_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(ForeTextBox.Text))
+            if (string.IsNullOrEmpty(ForeTextBox.Text))//Employee won't be entered if Forename text box is empty
             {
                 MessageBox.Show("You have not entered the forename of this new employee");
             }
             else
             {
-                if (string.IsNullOrEmpty(SurTextBox.Text))
+                if (string.IsNullOrEmpty(SurTextBox.Text))//Employee won't be entered if Surname text box is empty
                 {
                     MessageBox.Show("You have not entered the surname of this new employee");
                 }
                 else
                 {
-                    if (string.IsNullOrEmpty(MailTextBox.Text))
+                    if (string.IsNullOrEmpty(MailTextBox.Text))//Employee won't be entered if Email text box is empty
                     {
                         MessageBox.Show("You have not entered the email of this new employee");
                     }
                     else
                     {
-                        if (!MailTextBox.Text.Contains("@"))
+                        if (!MailTextBox.Text.Contains("@"))//Employee won't be entered if Email text box does not contain @
                         {
                             MessageBox.Show("You have not entered the email of this new employee correctly");
                         }
@@ -187,17 +192,17 @@ namespace CSC3032_Allstate_Project
                             String query = "declare @a int; " +
                                 "declare @b int; " +
                                 "declare @c int; " +
-                                "set @c = (select max(EmployeeID) from Employee) " +
-                                "set @a = (select count(*)  from Employee where Forename is null and Surname is null and Email is null) " +
+                                "if ((select count(*) from Employee) > 0) Begin set @c = (select max(EmployeeID) from Employee) end else Begin set @c = 0 end " + // if there are no employees in the table c = 0 but if there's at least 1 employee, c = the highest employee ID in the table
+                                "set @a = (select count(*)  from Employee where Forename is null and Surname is null and Email is null) " +//a = the number of jobs with no details except the EmployeeID
                                 "if @a > 0 " +
                                 "Begin " +
-                                "set @b = (select min(EmployeeID) from Employee where Forename is null and Surname is null and Email is null) " +
-                                "update Employee set Forename = (@Forename), Surname = @Surname, Email = @Email, JobID = @JobID, [Works Under] = @WorksUnder where EmployeeID = @b  " +
+                                "set @b = (select min(EmployeeID) from Employee where Forename is null and Surname is null and Email is null) " + //b = the ID number of the employee with the lowest ID number with no other details
+                                "update Employee set Forename = (@Forename), Surname = @Surname, Email = @Email, JobID = @JobID, [Works Under] = @WorksUnder where EmployeeID = @b  " + //updates the details of the Employee with the EmployeeID of b with the details from the text boxes
                                 "end " +
                                 "else " +
                                 "begin " +
                                 "DBCC CHECKIDENT(Employee, RESEED, @c) " +
-                                "Insert into [Employee](Forename, Surname, Email, JobID, [Works Under]) Values (@Forename, @Surname, @Email, @JobID, @WorksUnder); " +
+                                "Insert into [Employee](Forename, Surname, Email, JobID, [Works Under]) Values (@Forename, @Surname, @Email, @JobID, @WorksUnder); " + //inserts the details from the text boxes at the end of the table
                                 "end";
 
                             using (connection = new SqlConnection(connectionString))
@@ -209,7 +214,7 @@ namespace CSC3032_Allstate_Project
                                 command.Parameters.AddWithValue("@Forename", ForeTextBox.Text);
                                 command.Parameters.AddWithValue("@Surname", SurTextBox.Text);
                                 command.Parameters.AddWithValue("@Email", MailTextBox.Text);
-                                if (string.IsNullOrEmpty(JobIDBox.Text))
+                                if (string.IsNullOrEmpty(JobIDBox.Text))//allows the employee to be entered if there are no jobs since there is the chance that the user will chose to enter in the employees first
                                 {
                                     command.Parameters.AddWithValue("@JobID", DBNull.Value);
                                 }
@@ -218,7 +223,7 @@ namespace CSC3032_Allstate_Project
                                     command.Parameters.AddWithValue("@JobID", JobIDBox.Text);
                                 }
                                     
-                                if (string.IsNullOrEmpty(WUIDBox.Text))
+                                if (string.IsNullOrEmpty(WUIDBox.Text))//allows the employee to be entered if there are no other employees since there will be no other employees when the database is cleared
                                 {
                                     command.Parameters.AddWithValue("@WorksUnder", DBNull.Value);
                                 }
@@ -230,6 +235,7 @@ namespace CSC3032_Allstate_Project
                                 try
                                 {
                                     command.ExecuteReader();
+                                    MessageBox.Show("Employee Entered");
                                 }
                                 catch (System.Data.SqlClient.SqlException ex)
                                 {
@@ -250,12 +256,13 @@ namespace CSC3032_Allstate_Project
 
         }
 
-
+        //changes the value of the unseen textbox when the value in the drop down box 
         private void JobListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             showchngJobID();
         }
 
+        //puts the ID number of all employees into a drop down menu
         private void showID()
         {
             using (connection = new SqlConnection(connectionString))
@@ -271,6 +278,7 @@ namespace CSC3032_Allstate_Project
 
         }
 
+        //puts the forename of the employee in the IDBox in a textbox
         private void showForeNames()
         {
             String query = "SELECT Forename FROM Employee where EmployeeID = @EmployeeID";
@@ -296,7 +304,7 @@ namespace CSC3032_Allstate_Project
             }
 
         }
-
+        //puts the Surname of the employee in the IDBox in a textbox
         private void showSurNames()
         {
             String query = "SELECT Surname FROM Employee where EmployeeID = @EmployeeID";
@@ -320,7 +328,7 @@ namespace CSC3032_Allstate_Project
             }
 
         }
-
+        //puts the Email of the employee in the IDBox in a textbox
         private void showEmail()
         {
             String query = "SELECT Email FROM Employee where EmployeeID = @EmployeeID";
@@ -345,7 +353,7 @@ namespace CSC3032_Allstate_Project
 
         }
 
-
+        //puts the Job Name of the employee in the IDBox in a textbox
         private void showJobs()
         {
             String query = "SELECT [Job Name] FROM Jobs " +
@@ -371,6 +379,7 @@ namespace CSC3032_Allstate_Project
             }
         }
 
+        //puts the forename of the employee who the employee in the IDBox works for in a textbox
         private void showWUForeName()
         {
             String query = "select Forename from Employee" +
@@ -396,6 +405,7 @@ namespace CSC3032_Allstate_Project
             }
         }
 
+        //puts the surname of the employee who the employee in the IDBox works for in a textbox
         private void showWUSurName()
         {
             String query = "select Surname from Employee" +
@@ -421,7 +431,7 @@ namespace CSC3032_Allstate_Project
             }
 
         }
-
+        //changes the text in the text boxes when the ID number in the drop down box changes.
         private void IDBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             showForeNames();
@@ -431,7 +441,7 @@ namespace CSC3032_Allstate_Project
             showWUForeName();
             showWUSurName();
         }
-
+        //deletes everything in the database
         private void ClearDatabaseBtn_Click(object sender, EventArgs e)
         {
 
@@ -471,7 +481,7 @@ namespace CSC3032_Allstate_Project
             }
 
         }
-
+        //deletes everything in the employee benefits and employee tables
         private void ClearEmpBtn_Click(object sender, EventArgs e)
         {
             DialogResult Dr = MessageBox.Show("You pressed the button to completely clear all your employees from the database. Are you sure you want to do this?", "Clear Job Benefits", MessageBoxButtons.YesNo);
@@ -502,7 +512,7 @@ namespace CSC3032_Allstate_Project
                 En.Show();
             }
         }
-
+        //changes the text in the text boxes when the value in the ID drop down box changes
         private void IDBox_SelectedIndexChanged_1(object sender, EventArgs e)
         {
             showForeNames();
@@ -513,46 +523,61 @@ namespace CSC3032_Allstate_Project
             showWUSurName();
         }
 
+        //changes the text in the text boxes when the value in the WUID drop down box changes
         private void WUIDBox_SelectedIndexChanged_1(object sender, EventArgs e)
         {
             showWUForeNames();
             showWUSurNames();
         }
-
+        //changes the text in the unseen text box when the name of the job in the drop down box is changed
         private void JobBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             showchngJobID();
         }
-
+        //Deletes all benefits owned by the selected employee, anyone who worked under them has their Works Under field set to NULL and sets all their details to NULL
         private void DeleteEmpBtn_Click(object sender, EventArgs e)
         {
-            String query = " " +
-                    "Delete from [Employee Benefits] where EmployeeID = @ID; " +
-                    "update Employee set [Works Under] = NULL where [Works Under] = @ID " +
-                    "update Employee set Forename = NULL, Surname = NULL, Email = NULL, JobID = NULL, [Works Under] = NULL where EmployeeID = @ID;";
-
-
-
-            using (connection = new SqlConnection(connectionString))
-            using (SqlCommand command = new SqlCommand(query, connection))
-            using (SqlDataAdapter adapter = new SqlDataAdapter(command))
+            if (IDBox.Items.Count > 0)
             {
-                command.Parameters.AddWithValue("@ID", IDBox.Text);
+                String query = " " +
+                   "Delete from [Employee Benefits] where EmployeeID = @ID; " +
+                   "update Employee set [Works Under] = NULL where [Works Under] = @ID " +
+                   "update Employee set Forename = NULL, Surname = NULL, Email = NULL, JobID = NULL, [Works Under] = NULL where EmployeeID = @ID;";
 
-                try
-                {
-                    connection.Open();
-                    command.ExecuteNonQuery();
-                    showID();
-                    showWID();
-                    MessageBox.Show("Employee Deleted");
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
 
+
+                using (connection = new SqlConnection(connectionString))
+                using (SqlCommand command = new SqlCommand(query, connection))
+                using (SqlDataAdapter adapter = new SqlDataAdapter(command))
+                {
+                    command.Parameters.AddWithValue("@ID", IDBox.Text);
+
+                    try
+                    {
+                        connection.Open();
+                        command.ExecuteNonQuery();
+                        showID();
+                        showForeNames();
+                        showSurNames();
+                        showEmail();
+                        showJobs();
+                        showWUForeName();
+                        showWUSurName();
+                        showWID();
+                        showWUForeNames();
+                        showWUSurNames();
+                        MessageBox.Show("Employee Deleted");
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                }
             }
+            else
+            {
+                MessageBox.Show("No Employee to Delete");
+            }            
         }
     }
 }

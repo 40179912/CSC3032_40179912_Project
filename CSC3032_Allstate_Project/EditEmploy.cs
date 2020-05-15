@@ -20,6 +20,7 @@ namespace CSC3032_Allstate_Project
         {
             InitializeComponent();
             connectionString = ConfigurationManager.ConnectionStrings["CSC3032_Allstate_Project.Properties.Settings.Database1ConnectionString"].ConnectionString;
+
             FindOutliers();
             showID();
             showchngJobID();
@@ -27,28 +28,28 @@ namespace CSC3032_Allstate_Project
         }
  //------------------------------------------------------------------------------------------------------------------------------------The Button Click Events needed to navigate the various forms---------------------
  //-----------------------------------------------------------------------------------------------------------
-
+        //closes the current page and then opens the Enter Employee page when the button is pressed
         private void EnterEmpBtn_Click(object sender, EventArgs e)
         {
             this.Hide();
             EnterEmp En = new EnterEmp();
             En.Show();
         }
-
+        //closes the current page and then opens the Enter Entitlement page when the button is pressed
         private void EnterBeneBtn_Click(object sender, EventArgs e)
         {
             this.Hide();
             EnterEntitlement En = new EnterEntitlement();
             En.Show();
         }
-
+        //closes the current page and then opens the Edit Job page when the button is pressed
         private void EditJobBeneBtn_Click(object sender, EventArgs e)
         {
             this.Hide();
             EditJob Ej = new EditJob();
             Ej.Show();
         }
-
+        //closes the current page and then opens the Enter Job page when the button is pressed
         private void EnterJobBtn_Click(object sender, EventArgs e)
         {
             this.Hide();
@@ -64,14 +65,14 @@ namespace CSC3032_Allstate_Project
                 "declare @x int; " + //The Employee's ID
                 "declare @y int " + 
                 "declare @z int " +
-                "set @x = (select min(EmployeeID) from Employee); " +
+                "set @x = (select min(EmployeeID) from Employee); " + //x = lowest EmployeeID in database
                 "while @x <= (select max(EmployeeID) from Employee) " + 
                 "begin " + //While loop that continues until all employees have been checked
                 "set @y = (select count(*) from((select EntitlementID from [Employee Benefits] where EmployeeID = @x) except (select EntitlementID from[Job Benefits] where JobID = (select JobID from Employee where EmployeeID = @x)))temp) " +//y = the number of benefits that the employee has that is not in their job. 
                 "set @z = (select count(*) from (select EntitlementID from [Job Benefits] where JobID = (select JobID from Employee where EmployeeID = @x) except (select EntitlementID from [Employee Benefits] where EmployeeID = @x))temp)" +//z = the number of benefits that the employee doesnt have from their job.
                 "if @y > 0 or @z > 0 " +
                 "update Employee set Anomoly = 1 where EmployeeID = @x " +
-                "else " +
+                "else " + //if y or z are greater than 1,  
                 "update Employee set Anomoly = 0 where EmployeeID = @x " +
                 "set @x = @x + 1 " +
                 "end";
@@ -91,7 +92,7 @@ namespace CSC3032_Allstate_Project
 //---------------------Functions used that reley on the employee's ID---------------------------------------
 //----------------------------------------------------------------------------------------------------------
 
-        //Shows the ID Numbers of every employee working at the company inside of a listbox
+        //Shows the ID Numbers of every employee working at the company inside of a dropdown box except those who have been removed from the database
         private void showID()
         {
             using (connection = new SqlConnection(connectionString))
@@ -133,6 +134,23 @@ namespace CSC3032_Allstate_Project
             else
             {
                 showID();
+            }
+            showForeNames();
+            showSurNames();
+            showEmail();
+            showJobSection();
+            showJobs();
+            showWUForeNames();
+            showWUSurNames();
+            showJobBenefits();
+            showEmployeeBenefits();
+            if (EmpBeneBox.Items.Count == 0)
+            {
+                EmpBeneDescBox.Clear();
+            }
+            if (JobBeneBox.Items.Count == 0)
+            {
+                JobBeneDescBox.Clear();
             }
         }
 
@@ -344,11 +362,11 @@ namespace CSC3032_Allstate_Project
 
 //---------------------------------------------------------------------------------------------------------------------- Allows the user to change an Employee's Job on the page so that ---------------------------- ------------ the Benefits can be added without having to swap forms ------------------------------------ -----------------------------------------------------------------------------------------------------------
 
-        //Shows all of the Jobs names inside of a listbox so that an employees job can be changed from there
+        //Shows all of the Jobs names inside of a dropdown box so that an employees job can be changed using the job chosen
         private void showchngJobID()
         {
             using (connection = new SqlConnection(connectionString))
-            using (SqlDataAdapter adapter = new SqlDataAdapter("SELECT [Job Name] FROM Jobs except (select [Job Name] from Jobs where [Job Name] is null and [Job Description] is null and Sector is null)", connection))
+            using (SqlDataAdapter adapter = new SqlDataAdapter("select * from Jobs except select * from Jobs where [Job Name] is null and [Job Description] is null and Sector is null order by JobID", connection))
             {
                 DataTable JIDtable = new DataTable();
                 adapter.Fill(JIDtable);
@@ -358,7 +376,7 @@ namespace CSC3032_Allstate_Project
                 ChngJobBox.DataSource = JIDtable;
             }
         }
-
+        //shows description of the job selected so that the user can get a basic understanding of the job
         private void showchngJobDesc()
         {
             String query = "SELECT [Job Description] FROM Jobs where [Job Name] = @JobName";
@@ -382,41 +400,69 @@ namespace CSC3032_Allstate_Project
             }
         }
 
-        //Changes the current job of the chosen employee to the chosen 
+        //Changes the current job of the chosen employee to the chosenjob in the dropdown box 
         private void JobUpdateBtn_Click(object sender, EventArgs e)
         {
-            connection = new SqlConnection(connectionString);
-            String query = "Update [Employee] set JobID = (Select JobID from Jobs where [Job Name] = @JobName) where EmployeeID = @EmployeeID";
-            using (connection = new SqlConnection(connectionString))
-            using (SqlCommand command = new SqlCommand(query, connection))
+            if (IDBox.Items.Count > 0)
             {
-                connection.Open();
-                command.Parameters.AddWithValue("@JobName", ChngJobBox.Text);
-                command.Parameters.AddWithValue("@EmployeeID", IDBox.Text);
+                if (ChngJobBox.Items.Count > 0)
+                {
+                    connection = new SqlConnection(connectionString);
+                    String query = "Update [Employee] set JobID = (Select JobID from Jobs where [Job Name] = @JobName) where EmployeeID = @EmployeeID";
+                    using (connection = new SqlConnection(connectionString))
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        connection.Open();
+                        command.Parameters.AddWithValue("@JobName", ChngJobBox.Text);
+                        command.Parameters.AddWithValue("@EmployeeID", IDBox.Text);
 
-                command.ExecuteScalar();
+                        command.ExecuteScalar();
+                    }
+                    FindOutliers();
+                    if (checkBox1.Checked)
+                    {
+                        string X = IDBox.Text;
+                        showOutliers();
+                        IDBox.Text = X;
+                    }
+                    showForeNames();
+                    showSurNames();
+                    showEmail();
+                    showJobSection();
+                    showJobs();
+                    showWUForeNames();
+                    showWUSurNames();
+                    showJobBenefits();
+                    showEmployeeBenefits();
+                    if (EmpBeneBox.Items.Count == 0)
+                    {
+                        EmpBeneDescBox.Clear();
+                    }
+                    if (JobBeneBox.Items.Count == 0)
+                    {
+                        JobBeneDescBox.Clear();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("There are no Jobs to change into");
+                }
             }
-            FindOutliers();
-            if (checkBox1.Checked)
+            else
             {
-                showOutliers();
+                MessageBox.Show("There are no employees");
             }
-            showJobs();
-            showJobSection();
-            showJobBenefits();
-            if (JobBeneBox.Items.Count == 0)
-            {
-                JobBeneDescBox.Clear();
-            }
+
         }
 
-        //reads the desription of the new job when each job in the drop down list is highlighted
+        //reads the desription of the new job when the job in the drop down list is changed
         private void ChngJobBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             showchngJobDesc();
         }
 
- //----------------------------------------------------------------------------------------------------------   Functions related to the allowing the user to give any benefit to any employee should the need arise -----------------------------------------------------------------------------------------------------------
+        //----------------------------------------------------------------------------------------------------------   
+        //Functions related to the allowing the user to give any benefit to any employee should the need arise -----------------------------------------------------------------------------------------------------------
         
         //Puts all benefit ID numbers in drop down menu
         private void showBenefits()
@@ -467,33 +513,72 @@ namespace CSC3032_Allstate_Project
         //Adds selected benefit to selected employees benefits
         private void AddBeneBut_Click(object sender, EventArgs e)
         {
-            String query = "Insert into [Employee Benefits] Values (@EmployeeID, @EntitlementID)";
+            if (IDBox.Items.Count > 0)
+            {
+                if (AddBeneBox.Items.Count > 0)
+                {
 
-            using (connection = new SqlConnection(connectionString))
-            using (SqlCommand command = new SqlCommand(query, connection))
-            using (SqlDataAdapter adapter = new SqlDataAdapter(command))
-            {
-                connection.Open();
-                command.Parameters.AddWithValue("@EmployeeID", IDBox.Text);
-                command.Parameters.AddWithValue("@EntitlementID", AddBeneBox.Text);
-                try
-                {
-                    command.ExecuteNonQuery();
+
+                    String query = "Delete from [Employee Benefits] where EmployeeID = @EmployeeID and EntitlementID = @EntitlementID";
+
+                    using (connection = new SqlConnection(connectionString))
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    using (SqlDataAdapter adapter = new SqlDataAdapter(command))
+                    {
+                        connection.Open();
+                        command.Parameters.AddWithValue("@EmployeeID", IDBox.Text);
+                        command.Parameters.AddWithValue("@EntitlementID", EmpBeneBox.Text);
+                        try
+                        {
+                            command.ExecuteNonQuery();
+
+                        }
+                        catch (System.Data.SqlClient.SqlException ex)
+                        {
+                            MessageBox.Show("This Employee already has this entitlement and it cannot be entered in again. Please select a different entitlement. ");
+                        }
+                    }
+
+                    FindOutliers();
+                    if (checkBox1.Checked)
+                    {
+                        string X = IDBox.Text;
+                        showOutliers();
+                        IDBox.Text = X;
+                    }
+                    showForeNames();
+                    showSurNames();
+                    showEmail();
+                    showJobSection();
+                    showJobs();
+                    showWUForeNames();
+                    showWUSurNames();
+                    showJobBenefits();
+                    showEmployeeBenefits();
+                    if (EmpBeneBox.Items.Count == 0)
+                    {
+                        EmpBeneDescBox.Clear();
+                    }
+                    if (JobBeneBox.Items.Count == 0)
+                    {
+                        JobBeneDescBox.Clear();
+                    }
                 }
-                catch (Exception ex)
+
+                else
                 {
-                    MessageBox.Show(ex.Message);
+                    MessageBox.Show("There are no Benefits to add");
                 }
             }
-            FindOutliers();
-            if (checkBox1.Checked)
+            else
             {
-                showOutliers();
+                MessageBox.Show("There are no employees");
             }
-            showEmployeeBenefits();
         }
 
- //----------------------------------------------------------------------------------------------------------Functions related to showing an employee's benefits and removing them if they have benefits they shouldn't                                                 have. -----------------------------------------------------------------------------------------------------------
+        //----------------------------------------------------------------------------------------------------------
+        //Functions related to showing an employee's benefits and removing them if they have benefits they shouldn't have. 
+        //-----------------------------------------------------------------------------------------------------------
         
         //shows all ID numbers of benefits the current employee has in a list box
         private void showEmployeeBenefits()
@@ -548,37 +633,66 @@ namespace CSC3032_Allstate_Project
         //Removes the highlighted benefit from the chosen employee's benefits when the button is pressed
         private void RemoveBtn_Click(object sender, EventArgs e)
         {
-            String query = "Delete from [Employee Benefits] where EmployeeID = @EmployeeID and EntitlementID = @EntitlementID";
-
-            using (connection = new SqlConnection(connectionString))
-            using (SqlCommand command = new SqlCommand(query, connection))
-            using (SqlDataAdapter adapter = new SqlDataAdapter(command))
+            if (IDBox.Items.Count > 0)
             {
-                connection.Open();
-                command.Parameters.AddWithValue("@EmployeeID", IDBox.Text);
-                command.Parameters.AddWithValue("@EntitlementID", EmpBeneBox.Text);
-
-                try
+                if (EmpBeneBox.Items.Count > 0)
                 {
-                    command.ExecuteNonQuery();
+                    String query = "Delete from [Employee Benefits] where EmployeeID = @EmployeeID and EntitlementID = @EntitlementID";
 
+                    using (connection = new SqlConnection(connectionString))
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    using (SqlDataAdapter adapter = new SqlDataAdapter(command))
+                    {
+                        connection.Open();
+                        command.Parameters.AddWithValue("@EmployeeID", IDBox.Text);
+                        command.Parameters.AddWithValue("@EntitlementID", EmpBeneBox.Text);
+                        try
+                        {
+                            command.ExecuteNonQuery();
+
+                        }
+                        catch
+                        {
+
+                        }
+                    }
+
+                    FindOutliers();
+                    if (checkBox1.Checked)
+                    {
+                        string X = IDBox.Text;
+                        showOutliers();
+                        IDBox.Text = X;
+                    }
+                    showForeNames();
+                    showSurNames();
+                    showEmail();
+                    showJobSection();
+                    showJobs();
+                    showWUForeNames();
+                    showWUSurNames();
+                    showJobBenefits();
+                    showEmployeeBenefits();
+                    if (EmpBeneBox.Items.Count == 0)
+                    {
+                        EmpBeneDescBox.Clear();
+                    }
+                    if (JobBeneBox.Items.Count == 0)
+                    {
+                        JobBeneDescBox.Clear();
+                    }
                 }
-                catch
+                else
                 {
-
+                    MessageBox.Show("There are no benefits to remove");
                 }
             }
-
-            FindOutliers();
-            if (checkBox1.Checked)
+            else
             {
-                showOutliers();
+                MessageBox.Show("There are no Employees");
             }
-            showEmployeeBenefits();
-            if (EmpBeneBox.Items.Count == 0)
-            {
-                EmpBeneDescBox.Clear();
-            }
+            
+           
         }
 
 
@@ -635,32 +749,64 @@ namespace CSC3032_Allstate_Project
         //Adds the highlighted benefit to the chosen employee's benefits when the button is clicked
         private void AddBenefitBtn_Click(object sender, EventArgs e)
         {
-
-            String query = "Insert into [Employee Benefits] Values (@EmployeeID, @EntitlementID)";
-
-            using (connection = new SqlConnection(connectionString))
-            using (SqlCommand command = new SqlCommand(query, connection))
-            using (SqlDataAdapter adapter = new SqlDataAdapter(command))
+            if (IDBox.Items.Count > 0)
             {
-                connection.Open();
-                command.Parameters.AddWithValue("@EmployeeID", IDBox.Text);
-                command.Parameters.AddWithValue("@EntitlementID", JobBeneBox.Text);
-                try
+                if (JobBeneBox.Items.Count > 0)
                 {
-                    command.ExecuteNonQuery();
-                }
-                catch (System.Data.SqlClient.SqlException ex)
-                {
-                    MessageBox.Show("This Employee already has this entitlement and it cannot be entered in again. Please select a different entitlement. ");
-                }
+                    String query = "Insert into [Employee Benefits] Values (@EmployeeID, @EntitlementID)";
 
+                    using (connection = new SqlConnection(connectionString))
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    using (SqlDataAdapter adapter = new SqlDataAdapter(command))
+                    {
+                        connection.Open();
+                        command.Parameters.AddWithValue("@EmployeeID", IDBox.Text);
+                        command.Parameters.AddWithValue("@EntitlementID", JobBeneBox.Text);
+                        try
+                        {
+                            command.ExecuteNonQuery();
+                        }
+                        catch (System.Data.SqlClient.SqlException ex)
+                        {
+                            MessageBox.Show("This Employee already has this entitlement and it cannot be entered in again. Please select a different entitlement. ");
+                        }
+
+                    }
+                    FindOutliers();
+                    if (checkBox1.Checked)
+                    {
+                        string X = IDBox.Text;
+                        showOutliers();
+                        IDBox.Text = X;
+                    }
+                    showForeNames();
+                    showSurNames();
+                    showEmail();
+                    showJobSection();
+                    showJobs();
+                    showWUForeNames();
+                    showWUSurNames();
+                    showJobBenefits();
+                    showEmployeeBenefits();
+                    if (EmpBeneBox.Items.Count == 0)
+                    {
+                        EmpBeneDescBox.Clear();
+                    }
+                    if (JobBeneBox.Items.Count == 0)
+                    {
+                        JobBeneDescBox.Clear();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("There are no Benefits to add");
+                }
             }
-            FindOutliers();
-            if (checkBox1.Checked)
+            else
             {
-                showOutliers();
+                MessageBox.Show("There are no employees");
             }
-            showEmployeeBenefits();
+            
         }
 
 
@@ -753,7 +899,13 @@ namespace CSC3032_Allstate_Project
             // TODO: This line of code loads data into the 'database1DataSet.Employee_Benefits' table. You can move, or remove it, as needed.
             this.employee_BenefitsTableAdapter.Fill(this.database1DataSet.Employee_Benefits);
 
+
         }
 
+        private void EditEmploy_Resize(object sender, EventArgs e)
+        {
+           // panel1.Width = Convert.ToInt32(this.Width * 0.5);
+           
+        }
     }
 }
