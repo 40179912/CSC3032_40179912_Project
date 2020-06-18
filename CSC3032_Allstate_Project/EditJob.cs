@@ -18,11 +18,16 @@ namespace CSC3032_Allstate_Project
         string connectionString;
         public EditJob()
         {
+
+            
+            InitializeComponent();
+            this.Size = new Size(848, 665);
             connectionString = ConfigurationManager.ConnectionStrings["CSC3032_Allstate_Project.Properties.Settings.Database1ConnectionString"].ConnectionString;
 
-            InitializeComponent();
             showJobs();
             showBenefits();
+
+
             pictureBox1.Image = Properties.Resources.Allstate_logo;
 
         }
@@ -382,6 +387,25 @@ namespace CSC3032_Allstate_Project
         private void InsrtBeneBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             showBenefitDescription();
+        }
+
+        private void EditJob_Resize(object sender, EventArgs e)
+        {
+            panel4.Width = this.Width / (845/376);
+            panel4.Left = 0;
+            panel4.Top = panel3.Bottom;
+
+            panel2.Width = this.Width / (845 / 455);
+            panel2.Height = this.Height / (630 / 188);
+            panel2.Left = panel4.Right;
+            panel2.Top = panel3.Bottom;
+
+            panel1.Width = this.Width / (845 / 452);
+            panel1.Height = panel4.Height - panel2.Height;
+            panel1.Left = panel4.Right;
+            panel1.Top = panel2.Bottom;
+
+
         }
     }
 }

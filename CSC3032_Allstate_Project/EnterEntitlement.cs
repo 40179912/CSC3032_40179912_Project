@@ -21,6 +21,8 @@ namespace CSC3032_Allstate_Project
             connectionString = ConfigurationManager.ConnectionStrings["CSC3032_Allstate_Project.Properties.Settings.Database1ConnectionString"].ConnectionString;
 
             InitializeComponent();
+            this.Size = new Size(815, 515);
+
             showBenefits();
             pictureBox1.Image = Properties.Resources.Allstate_logo;
         }
@@ -262,6 +264,15 @@ namespace CSC3032_Allstate_Project
                 MessageBox.Show("No Benefit to delete");
             }
             
+        }
+
+        private void EnterEntitlement_Resize(object sender, EventArgs e)
+        {
+            panel2.Width = this.Width/2;
+            panel2.Left = 0;
+
+            panel1.Width = this.Width / 2;
+            panel1.Left = panel2.Right;
         }
     }
 }

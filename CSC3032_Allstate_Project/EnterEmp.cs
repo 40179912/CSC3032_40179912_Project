@@ -19,6 +19,8 @@ namespace CSC3032_Allstate_Project
         public EnterEmp()
         {
             InitializeComponent();
+            this.Size = new Size(802, 595);
+
             connectionString = ConfigurationManager.ConnectionStrings["CSC3032_Allstate_Project.Properties.Settings.Database1ConnectionString"].ConnectionString;
             showchngJobName();
             showWID();
@@ -26,8 +28,9 @@ namespace CSC3032_Allstate_Project
             pictureBox1.Image = Properties.Resources.Allstate_logo;
         }
 
-//------------------------------------------------------------------------------------------------------------------------------------The Button Click Events needed to navigate the various forms----------------------------------------------------
-//--------------------------------------------------------------------------------------------------------------------------
+        //------------------------------------------------------------------------------------------------------------------------------------
+        //The Button Click Events needed to navigate the various forms----------------------------------------------------
+        //--------------------------------------------------------------------------------------------------------------------------
 
         //closes the current page and then opens the Edit Employee page when the button is pressed
         private void EditEmployBeneBtn_Click(object sender, EventArgs e)
@@ -578,6 +581,15 @@ namespace CSC3032_Allstate_Project
             {
                 MessageBox.Show("No Employee to Delete");
             }            
+        }
+
+        private void EnterEmp_Resize(object sender, EventArgs e)
+        {
+            panel3.Width = this.Width / (802 / 384);
+            panel3.Left = 0;
+
+            panel2.Width = this.Width - panel3.Width;
+            panel2.Left = panel3.Right;
         }
     }
 }

@@ -55,7 +55,7 @@
             // 
             // label2
             // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+            this.label2.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(46, 22);
             this.label2.MaximumSize = new System.Drawing.Size(347, 51);
@@ -68,7 +68,8 @@
             // 
             // EntitlementTextBox
             // 
-            this.EntitlementTextBox.Location = new System.Drawing.Point(38, 78);
+            this.EntitlementTextBox.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.EntitlementTextBox.Location = new System.Drawing.Point(38, 79);
             this.EntitlementTextBox.Multiline = true;
             this.EntitlementTextBox.Name = "EntitlementTextBox";
             this.EntitlementTextBox.Size = new System.Drawing.Size(347, 132);
@@ -76,7 +77,8 @@
             // 
             // AddBeneBut
             // 
-            this.AddBeneBut.Location = new System.Drawing.Point(163, 216);
+            this.AddBeneBut.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.AddBeneBut.Location = new System.Drawing.Point(163, 217);
             this.AddBeneBut.Name = "AddBeneBut";
             this.AddBeneBut.Size = new System.Drawing.Size(103, 23);
             this.AddBeneBut.TabIndex = 49;
@@ -86,8 +88,9 @@
             // 
             // BeneDescBox
             // 
+            this.BeneDescBox.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.BeneDescBox.BackColor = System.Drawing.Color.White;
-            this.BeneDescBox.Location = new System.Drawing.Point(81, 78);
+            this.BeneDescBox.Location = new System.Drawing.Point(81, 77);
             this.BeneDescBox.Multiline = true;
             this.BeneDescBox.Name = "BeneDescBox";
             this.BeneDescBox.ReadOnly = true;
@@ -152,7 +155,7 @@
             // 
             // label1
             // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+            this.label1.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(30, 5);
             this.label1.MaximumSize = new System.Drawing.Size(347, 68);
@@ -187,11 +190,12 @@
             // 
             // BeneBox
             // 
+            this.BeneBox.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.BeneBox.DropDownHeight = 94;
             this.BeneBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.BeneBox.FormattingEnabled = true;
             this.BeneBox.IntegralHeight = false;
-            this.BeneBox.Location = new System.Drawing.Point(28, 78);
+            this.BeneBox.Location = new System.Drawing.Point(28, 77);
             this.BeneBox.Name = "BeneBox";
             this.BeneBox.Size = new System.Drawing.Size(53, 24);
             this.BeneBox.TabIndex = 87;
@@ -199,7 +203,8 @@
             // 
             // DeleteBeneBtn
             // 
-            this.DeleteBeneBtn.Location = new System.Drawing.Point(162, 216);
+            this.DeleteBeneBtn.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.DeleteBeneBtn.Location = new System.Drawing.Point(162, 213);
             this.DeleteBeneBtn.Name = "DeleteBeneBtn";
             this.DeleteBeneBtn.Size = new System.Drawing.Size(75, 23);
             this.DeleteBeneBtn.TabIndex = 91;
@@ -218,7 +223,7 @@
             this.panel1.Controls.Add(this.DeleteBeneBtn);
             this.panel1.Location = new System.Drawing.Point(420, 164);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(384, 253);
+            this.panel1.Size = new System.Drawing.Size(384, 250);
             this.panel1.TabIndex = 92;
             // 
             // panel2
@@ -231,7 +236,7 @@
             this.panel2.Controls.Add(this.AddBeneBut);
             this.panel2.Location = new System.Drawing.Point(-1, 164);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(425, 249);
+            this.panel2.Size = new System.Drawing.Size(425, 250);
             this.panel2.TabIndex = 0;
             // 
             // panel3
@@ -272,6 +277,7 @@
             this.Controls.Add(this.pictureBox1);
             this.Name = "EnterEntitlement";
             this.Text = "Enter Entitlements/Benefits";
+            this.Resize += new System.EventHandler(this.EnterEntitlement_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();

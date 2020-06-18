@@ -22,6 +22,8 @@ namespace CSC3032_Allstate_Project
             connectionString = ConfigurationManager.ConnectionStrings["CSC3032_Allstate_Project.Properties.Settings.Database1ConnectionString"].ConnectionString;
 
             InitializeComponent();
+            this.Size = new Size(845, 572);
+
             showSector();
             showJobs();
             pictureBox1.Image = Properties.Resources.Allstate_logo;
@@ -387,6 +389,15 @@ namespace CSC3032_Allstate_Project
                 MessageBox.Show("No Job to Delete");
             }
             
+        }
+
+        private void EnterJob_Resize(object sender, EventArgs e)
+        {
+            panel3.Width = this.Width / (845 / 419);
+            panel3.Left = 0;
+
+            panel1.Width = this.Width - panel3.Width;
+            panel1.Left = panel3.Right;
         }
     }
 }

@@ -79,6 +79,7 @@
             // 
             // ForeTextBox
             // 
+            this.ForeTextBox.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.ForeTextBox.Location = new System.Drawing.Point(116, 97);
             this.ForeTextBox.Name = "ForeTextBox";
             this.ForeTextBox.Size = new System.Drawing.Size(222, 22);
@@ -86,6 +87,7 @@
             // 
             // SurTextBox
             // 
+            this.SurTextBox.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.SurTextBox.Location = new System.Drawing.Point(116, 125);
             this.SurTextBox.Name = "SurTextBox";
             this.SurTextBox.Size = new System.Drawing.Size(222, 22);
@@ -93,6 +95,7 @@
             // 
             // MailTextBox
             // 
+            this.MailTextBox.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.MailTextBox.Location = new System.Drawing.Point(116, 153);
             this.MailTextBox.Name = "MailTextBox";
             this.MailTextBox.Size = new System.Drawing.Size(222, 22);
@@ -100,6 +103,7 @@
             // 
             // button1
             // 
+            this.button1.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.button1.Location = new System.Drawing.Point(186, 290);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
@@ -110,6 +114,7 @@
             // 
             // label6
             // 
+            this.label6.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(28, 100);
             this.label6.Name = "label6";
@@ -119,6 +124,7 @@
             // 
             // label1
             // 
+            this.label1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(35, 125);
             this.label1.Name = "label1";
@@ -128,6 +134,7 @@
             // 
             // label2
             // 
+            this.label2.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(54, 153);
             this.label2.Name = "label2";
@@ -137,6 +144,7 @@
             // 
             // label3
             // 
+            this.label3.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(65, 184);
             this.label3.Name = "label3";
@@ -146,6 +154,7 @@
             // 
             // WUForeBox
             // 
+            this.WUForeBox.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.WUForeBox.BackColor = System.Drawing.Color.White;
             this.WUForeBox.Location = new System.Drawing.Point(116, 234);
             this.WUForeBox.Name = "WUForeBox";
@@ -155,6 +164,7 @@
             // 
             // WUSurBox
             // 
+            this.WUSurBox.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.WUSurBox.BackColor = System.Drawing.Color.White;
             this.WUSurBox.Location = new System.Drawing.Point(116, 255);
             this.WUSurBox.Name = "WUSurBox";
@@ -164,6 +174,7 @@
             // 
             // label4
             // 
+            this.label4.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(9, 211);
             this.label4.Name = "label4";
@@ -194,8 +205,8 @@
             // 
             // EditJobBeneBtn
             // 
-            this.EditJobBeneBtn.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.EditJobBeneBtn.Location = new System.Drawing.Point(428, 31);
+            this.EditJobBeneBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.EditJobBeneBtn.Location = new System.Drawing.Point(629, 31);
             this.EditJobBeneBtn.Name = "EditJobBeneBtn";
             this.EditJobBeneBtn.Size = new System.Drawing.Size(151, 40);
             this.EditJobBeneBtn.TabIndex = 62;
@@ -205,8 +216,8 @@
             // 
             // EnterBeneBtn
             // 
-            this.EnterBeneBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.EnterBeneBtn.Location = new System.Drawing.Point(625, 31);
+            this.EnterBeneBtn.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.EnterBeneBtn.Location = new System.Drawing.Point(262, 31);
             this.EnterBeneBtn.Name = "EnterBeneBtn";
             this.EnterBeneBtn.Size = new System.Drawing.Size(111, 40);
             this.EnterBeneBtn.TabIndex = 61;
@@ -216,7 +227,7 @@
             // 
             // EditEmployBeneBtn
             // 
-            this.EditEmployBeneBtn.Location = new System.Drawing.Point(27, 31);
+            this.EditEmployBeneBtn.Location = new System.Drawing.Point(0, 31);
             this.EditEmployBeneBtn.Name = "EditEmployBeneBtn";
             this.EditEmployBeneBtn.Size = new System.Drawing.Size(185, 40);
             this.EditEmployBeneBtn.TabIndex = 60;
@@ -227,7 +238,7 @@
             // EnterEmpBtn
             // 
             this.EnterEmpBtn.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.EnterEmpBtn.Location = new System.Drawing.Point(254, 31);
+            this.EnterEmpBtn.Location = new System.Drawing.Point(445, 31);
             this.EnterEmpBtn.Name = "EnterEmpBtn";
             this.EnterEmpBtn.Size = new System.Drawing.Size(124, 40);
             this.EnterEmpBtn.TabIndex = 59;
@@ -237,6 +248,7 @@
             // 
             // label5
             // 
+            this.label5.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(9, 19);
             this.label5.MaximumSize = new System.Drawing.Size(350, 68);
@@ -250,6 +262,7 @@
             // 
             // label7
             // 
+            this.label7.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(2, 228);
             this.label7.Name = "label7";
@@ -259,6 +272,7 @@
             // 
             // ShowWUSurBox
             // 
+            this.ShowWUSurBox.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.ShowWUSurBox.BackColor = System.Drawing.Color.White;
             this.ShowWUSurBox.Location = new System.Drawing.Point(103, 249);
             this.ShowWUSurBox.Name = "ShowWUSurBox";
@@ -268,6 +282,7 @@
             // 
             // showWUForeBox
             // 
+            this.showWUForeBox.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.showWUForeBox.BackColor = System.Drawing.Color.White;
             this.showWUForeBox.Location = new System.Drawing.Point(103, 228);
             this.showWUForeBox.Name = "showWUForeBox";
@@ -277,6 +292,7 @@
             // 
             // label8
             // 
+            this.label8.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label8.AutoSize = true;
             this.label8.Location = new System.Drawing.Point(58, 201);
             this.label8.Name = "label8";
@@ -286,6 +302,7 @@
             // 
             // label9
             // 
+            this.label9.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label9.AutoSize = true;
             this.label9.Location = new System.Drawing.Point(47, 170);
             this.label9.Name = "label9";
@@ -295,6 +312,7 @@
             // 
             // label10
             // 
+            this.label10.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label10.AutoSize = true;
             this.label10.Location = new System.Drawing.Point(28, 141);
             this.label10.Name = "label10";
@@ -304,6 +322,7 @@
             // 
             // label11
             // 
+            this.label11.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label11.AutoSize = true;
             this.label11.Location = new System.Drawing.Point(21, 123);
             this.label11.Name = "label11";
@@ -313,6 +332,7 @@
             // 
             // showMailBox
             // 
+            this.showMailBox.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.showMailBox.BackColor = System.Drawing.Color.White;
             this.showMailBox.Location = new System.Drawing.Point(103, 170);
             this.showMailBox.Name = "showMailBox";
@@ -322,6 +342,7 @@
             // 
             // showSurBox
             // 
+            this.showSurBox.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.showSurBox.BackColor = System.Drawing.Color.White;
             this.showSurBox.Location = new System.Drawing.Point(103, 141);
             this.showSurBox.Name = "showSurBox";
@@ -331,6 +352,7 @@
             // 
             // showForeBox
             // 
+            this.showForeBox.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.showForeBox.BackColor = System.Drawing.Color.White;
             this.showForeBox.Location = new System.Drawing.Point(103, 120);
             this.showForeBox.Name = "showForeBox";
@@ -340,6 +362,7 @@
             // 
             // showJobBox
             // 
+            this.showJobBox.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.showJobBox.BackColor = System.Drawing.Color.White;
             this.showJobBox.Location = new System.Drawing.Point(103, 200);
             this.showJobBox.Name = "showJobBox";
@@ -349,6 +372,7 @@
             // 
             // label12
             // 
+            this.label12.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label12.AutoSize = true;
             this.label12.Location = new System.Drawing.Point(6, 94);
             this.label12.Name = "label12";
@@ -358,6 +382,7 @@
             // 
             // label13
             // 
+            this.label13.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.label13.AutoSize = true;
             this.label13.Location = new System.Drawing.Point(16, 2);
             this.label13.MaximumSize = new System.Drawing.Size(370, 85);
@@ -391,6 +416,7 @@
             // 
             // JobBox
             // 
+            this.JobBox.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.JobBox.DropDownHeight = 67;
             this.JobBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.JobBox.FormattingEnabled = true;
@@ -403,6 +429,7 @@
             // 
             // WUIDBox
             // 
+            this.WUIDBox.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.WUIDBox.DropDownHeight = 67;
             this.WUIDBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.WUIDBox.FormattingEnabled = true;
@@ -415,6 +442,7 @@
             // 
             // IDBox
             // 
+            this.IDBox.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.IDBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.IDBox.FormattingEnabled = true;
             this.IDBox.IntegralHeight = false;
@@ -426,6 +454,7 @@
             // 
             // DeleteEmpBtn
             // 
+            this.DeleteEmpBtn.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.DeleteEmpBtn.Location = new System.Drawing.Point(181, 290);
             this.DeleteEmpBtn.Name = "DeleteEmpBtn";
             this.DeleteEmpBtn.Size = new System.Drawing.Size(75, 23);
@@ -522,6 +551,7 @@
             this.Controls.Add(this.pictureBox1);
             this.Name = "EnterEmp";
             this.Text = "Enter Employees";
+            this.Resize += new System.EventHandler(this.EnterEmp_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);

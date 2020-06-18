@@ -19,6 +19,8 @@ namespace CSC3032_Allstate_Project
         public EditEmploy()
         {
             InitializeComponent();
+            this.Size = new Size(988, 822);
+
             connectionString = ConfigurationManager.ConnectionStrings["CSC3032_Allstate_Project.Properties.Settings.Database1ConnectionString"].ConnectionString;
 
             FindOutliers();
@@ -519,7 +521,7 @@ namespace CSC3032_Allstate_Project
                 {
 
 
-                    String query = "Delete from [Employee Benefits] where EmployeeID = @EmployeeID and EntitlementID = @EntitlementID";
+                    String query = "Insert into [Employee Benefits] Values (@EmployeeID, @EntitlementID)";
 
                     using (connection = new SqlConnection(connectionString))
                     using (SqlCommand command = new SqlCommand(query, connection))
@@ -527,7 +529,7 @@ namespace CSC3032_Allstate_Project
                     {
                         connection.Open();
                         command.Parameters.AddWithValue("@EmployeeID", IDBox.Text);
-                        command.Parameters.AddWithValue("@EntitlementID", EmpBeneBox.Text);
+                        command.Parameters.AddWithValue("@EntitlementID", AddBeneBox.Text);
                         try
                         {
                             command.ExecuteNonQuery();
@@ -904,8 +906,25 @@ namespace CSC3032_Allstate_Project
 
         private void EditEmploy_Resize(object sender, EventArgs e)
         {
-           // panel1.Width = Convert.ToInt32(this.Width * 0.5);
-           
+            panel1.Width = this.Width / (925 / 449);
+            panel1.Height = this.Height / (772 / 172);
+            panel1.Left = 0;
+            panel1.Top = panel5.Bottom;
+
+            panel3.Width = this.Width / (925 / 458);
+            panel3.Height = this.Height / (772 / 172);
+            panel3.Left = panel1.Right;
+            panel3.Top = panel5.Bottom;
+
+            panel4.Width = this.Width / (925 / 449);
+            panel4.Height = panel2.Height + panel3.Height - panel1.Height;
+            panel4.Left = 0;
+            panel4.Top = panel1.Bottom;
+
+            panel2.Width = this.Width / (925 / 458);
+            panel2.Height = this.Height / (457 / 202);
+            panel2.Left = panel4.Right;
+            panel2.Top = panel1.Bottom;
         }
     }
 }
